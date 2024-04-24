@@ -1,6 +1,5 @@
 import java.util.HashMap;
 
-
 public class Database {
 
     private HashMap<Integer, Alumno> tablaAlumno = new HashMap<>();
@@ -15,6 +14,10 @@ public class Database {
             instance = new Database();
         }
         return instance;
+    }
+
+    public static void setInstance(Database newInstance) {
+        instance = newInstance;
     }
 
     public HashMap<Integer, Alumno> getTablaAlumno() {
