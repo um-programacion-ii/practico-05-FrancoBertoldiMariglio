@@ -31,7 +31,10 @@ public class AlumnoDaoTest {
         tablaAlumnoTest.put(1, new Alumno("Rosa", "Gutierrez", 30));
         when(dbMock.getTablaAlumno()).thenReturn(tablaAlumnoTest);
 
-        assertTrue(tablaAlumnoTest.equals(alumnoDao.findAll()));
+        HashMap<Integer, Alumno> test = dbMock.getTablaAlumno();
+        HashMap<Integer, Alumno> result = alumnoDao.findAll();
+
+        assertEquals(test, result);
     }
 
     @Test
@@ -59,19 +62,19 @@ public class AlumnoDaoTest {
         assertThrows(NoSuchElementException.class, () -> alumnoDao.findByAlumnoId(10));
     }
 
-//    @Test
-//    public void addTest() throws DataAccessException {
-//        dbMock = Mockito.mock(Database.class);
-//        Database.setInstance(dbMock);
-//        tablaAlumnoTest = new HashMap<>();
-//        tablaAlumnoTest.put(0, new Alumno("Juan", "Perez", 20));
-//        tablaAlumnoTest.put(1, new Alumno("Rosa", "Gutierrez", 30));
-//        when(dbMock.getTablaAlumno()).thenReturn(tablaAlumnoTest);
-//
-//        Alumno newAlumno = new Alumno("Maria", "Gomez", 22);
-//        alumnoDao.add(newAlumno);
-//        verify(dbMock.getTablaAlumno(), times(1)).put(anyInt(), eq(newAlumno));
-//    }
+    @Test
+    public void addTest() throws DataAccessException {
+        dbMock = Mockito.mock(Database.class);
+        Database.setInstance(dbMock);
+        tablaAlumnoTest = new HashMap<>();
+        tablaAlumnoTest.put(0, new Alumno("Juan", "Perez", 20));
+        tablaAlumnoTest.put(1, new Alumno("Rosa", "Gutierrez", 30));
+        when(dbMock.getTablaAlumno()).thenReturn(tablaAlumnoTest);
+
+        Alumno newAlumno = new Alumno("Maria", "Gomez", 22);
+        alumnoDao.add(newAlumno);
+        verify(dbMock.getTablaAlumno(), times(1)).put(anyInt(), eq(newAlumno));
+    }
 
     @Test
     public void deleteTest() throws DataAccessException {
