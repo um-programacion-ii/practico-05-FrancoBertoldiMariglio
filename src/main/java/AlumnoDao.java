@@ -29,6 +29,8 @@ public class AlumnoDao {
                 throw new NoSuchElementException("No Alumno with ID " + ID);
             }
             return alumno;
+        } catch (NoSuchElementException e) {
+            throw e;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error finding Alumno by ID", e);
             throw new DataAccessException("Error finding Alumno by ID", e);
@@ -44,13 +46,18 @@ public class AlumnoDao {
         }
     }
 
-    public Alumno update(Alumno alumno, int ID) throws DataAccessException, NoSuchElementException {
+    public Alumno update(int ID, Alumno alumno) throws DataAccessException, NoSuchElementException {
         try {
+            if (db.getTablaAlumno().get(ID) == null) {
+                throw new NoSuchElementException("No Alumno with ID " + ID);
+            }
             Alumno oldAlumno = db.getTablaAlumno().put(ID, alumno);
             if (oldAlumno == null) {
                 throw new NoSuchElementException("No Alumno with ID " + ID);
             }
             return db.getTablaAlumno().get(ID);
+        } catch (NoSuchElementException e) {
+            throw e;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error updating Alumno", e);
             throw new DataAccessException("Error updating Alumno", e);
@@ -63,6 +70,8 @@ public class AlumnoDao {
             if (removedAlumno == null) {
                 throw new NoSuchElementException("No Alumno with ID " + ID);
             }
+        } catch (NoSuchElementException e) {
+            throw e;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error deleting Alumno", e);
             throw new DataAccessException("Error deleting Alumno", e);
